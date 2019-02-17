@@ -27,11 +27,10 @@ iptables -P OUTPUT ACCEPT
 iptables -P INPUT DROP
 service iptables save
 service iptables restart
-echo -n "Enter New User:"
-read newUser
-useradd newUser
-passwd newUser
-usermod -aG wheel newUser
+read -p 'New Username: ' newUser
+useradd $newUser
+passwd $newUser
+usermod -aG wheel $newUser
 usermod -s /bin/false sysadmin
 usermod -L sysadmin
 exit 0;
