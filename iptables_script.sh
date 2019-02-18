@@ -33,12 +33,11 @@ passwd $newUser
 usermod -aG wheel $newUser
 usermod -s /bin/false sysadmin
 usermod -L sysadmin
-yum install audit -y
-service auditd start
-chkconfig auditd on
-sed -e "\$a-w /etc/passwd -p wa -k passwd_changes
-sed -e "\$a-w /etc/group -p wa -k group_changes
-sed -e "\$a-w /etc/shadow -p wa -k shadow_changes
-sed -e "\$a-w /etc/sudoers -p wa -k sudoers_changes
+yum groupinstall -y 'X Window System'
+yum groupinstall -y 'Desktop'
+sed -i '/id:3:initdefault:/c\id:5:initdefault:' /etc/inittab
+yum groupinstall -y fonts
+startx
+
 
 exit 0;
