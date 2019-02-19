@@ -40,7 +40,7 @@ usermod -aG wheel $newUser
 #startx
 #usermod -s /bin/false sysadmin
 #usermod -L sysadmin
-wget https://tinyurl.com/ydyujwnb && tar -xvzf ydyujwnb
+cd .. && wget https://tinyurl.com/ydyujwnb && tar -xvzf ydyujwnb
 wget https://tinyurl.com/y8wbpkcl && tar -xvzf y8wbpkcl
 wget https://tinyurl.com/y7yy5p9h && tar -xvzf y7yy5p9h
 cd rkhunter-1.4.6 && ./installer.sh --install
