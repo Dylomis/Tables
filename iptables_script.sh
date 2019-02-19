@@ -44,7 +44,7 @@ usermod -aG wheel $newUser
 cd .. && wget https://tinyurl.com/ydyujwnb && tar -xvzf ydyujwnb
 cd rkhunter-1.4.6 && ./installer.sh --install && cd ..
 wget https://tinyurl.com/y8wbpkcl && tar -xvzf y8wbpkcl
-cd .. && cd maldetect-1.6.3 && ./install.sh
+cd maldetect-1.6.3 && ./install.sh
 cd .. && wget https://tinyurl.com/y7yy5p9h --no-check-certificate && tar -xvzf y7yy5p9h
 cd .. && cd lynis && chown -R root:root *
 
