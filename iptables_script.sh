@@ -41,10 +41,10 @@ usermod -aG wheel $newUser
 #usermod -s /bin/false sysadmin
 #usermod -L sysadmin
 cd .. && wget https://tinyurl.com/ydyujwnb && tar -xvzf ydyujwnb
+cd rkhunter-1.4.6 && ./installer.sh --install && cd ..
 wget https://tinyurl.com/y8wbpkcl && tar -xvzf y8wbpkcl
-wget https://tinyurl.com/y7yy5p9h && tar -xvzf y7yy5p9h
-cd rkhunter-1.4.6 && ./installer.sh --install
-cd .. && cd lynis && chown -R root:root *
 cd .. && cd maldetect-1.6.3 && ./install.sh
+wget https://tinyurl.com/y7yy5p9h --no-check-certificate && tar -xvzf y7yy5p9h
+cd .. && cd lynis && chown -R root:root *
 
 exit 0;
