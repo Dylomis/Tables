@@ -2,7 +2,8 @@
 passwd root
 sed -i '/#PermitRootLogin yes/c\PermitRootLogin no' /etc/ssh/sshd_config
 service sshd restart
-usermod -s /sbin/nologin root
+##I commented the below command out temporarly incase I needed to get back into root.
+#usermod -s /sbin/nologin root
 iptables -F
 iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
 iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
