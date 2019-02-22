@@ -5,19 +5,20 @@ service sshd restart
 ##I commented the below command out temporarly incase I needed to get back into root.
 #usermod -s /sbin/nologin root
 iptables -F
-iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
-iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
-iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
-iptables -A INPUT -p tcp -m tcp --tcp-flags RST RST -m limit --limit 2/second --limit 2/secon --limit-burst 2 -j DROP
-iptables -A INPUT -p tcp --tcp-flags ALL FIN,URG,PSH -j DROP
-iptables -A INPUT -p tcp --tcp-flags SYN,RST SYN,RST -j DROP
-iptables -A INPUT -p tcp --tcp-flags SYN,FIN SYN,FIN -j DROP
-iptables -A INPUT -m recent --name portscan --rcheck --seconds 86400 -j DROP
-iptables -A FORWARD -m recent --name portscan --rcheck --seconds 86400 -j DROP
+iptables -N LOGGING
+iptables -A INPUT -p tcp --tcp-flags ALL NONE -j LOGGING
+iptables -A INPUT -p tcp ! --syn -m state --state NEW -j LOGGING
+iptables -A INPUT -p tcp --tcp-flags ALL ALL -j LOGGING
+iptables -A INPUT -p tcp -m tcp --tcp-flags RST RST -m limit --limit 2/second --limit 2/secon --limit-burst 2 -j LOGGING
+iptables -A INPUT -p tcp --tcp-flags ALL FIN,URG,PSH -j LOGGING
+iptables -A INPUT -p tcp --tcp-flags SYN,RST SYN,RST -j LOGGING
+iptables -A INPUT -p tcp --tcp-flags SYN,FIN SYN,FIN -j LOGGING
+iptables -A INPUT -m recent --name portscan --rcheck --seconds 86400 -j LOGGING
+iptables -A FORWARD -m recent --name portscan --rcheck --seconds 86400 -j LOGGING
 iptables -A INPUT -p tcp -m tcp --dport 139 -m recent --name portscan --set -j LOG --log-prefix "portscan:"
-iptables -A INPUT -p tcp -m tcp --dport 139 -m recent --name portscan --set -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 139 -m recent --name portscan --set -j LOGGING
 iptables -A FORWARD -p tcp -m tcp --dport 139 -m recent --name portscan --set -j LOG --log-prefix "portscan:"
-iptables -A FORWARD -p tcp -m tcp --dport 139 -m recent --name portscan --set -j DROP
+iptables -A FORWARD -p tcp -m tcp --dport 139 -m recent --name portscan --set -j LOGGING
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
@@ -27,17 +28,19 @@ iptables -A INPUT -p tcp -s 172.20.240.20 --dport 3306 -m conntrack --ctstate NE
 iptables -A OUTPUT -p tcp --sport 3306 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -P OUTPUT ACCEPT
-iptables -P INPUT DROP
+iptables -A INPUT -j LOGGING
+iptables -A LOGGING -m limit --limit 2/min -j LOG --log-prefix "IPTables-Dropped: " --log-level 4
+iptables -A LOGGING -j DROP
 service iptables save
 service iptables restart
 read -p 'New Username: ' newUser
 useradd $newUser
 passwd $newUser
 usermod -aG wheel $newUser
-#yum groupinstall -y 'X Window System'
-#yum groupinstall -y 'Desktop'
-#sed -i '/id:3:initdefault:/c\id:5:initdefault:' /etc/inittab
-#yum groupinstall -y fonts
+yum groupinstall -y 'X Window System'
+yum groupinstall -y 'Desktop'
+sed -i '/id:3:initdefault:/c\id:5:initdefault:' /etc/inittab
+yum groupinstall -y fonts
 #startx
 #usermod -s /bin/false sysadmin
 #usermod -L sysadmin
