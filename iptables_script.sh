@@ -37,10 +37,10 @@ read -p 'New Username: ' newUser
 useradd $newUser
 passwd $newUser
 usermod -aG wheel $newUser
-yum groupinstall -y 'X Window System'
-yum groupinstall -y 'Desktop'
-sed -i '/id:3:initdefault:/c\id:5:initdefault:' /etc/inittab
-yum groupinstall -y fonts
+#yum groupinstall -y 'X Window System'
+#yum groupinstall -y 'Desktop'
+#sed -i '/id:3:initdefault:/c\id:5:initdefault:' /etc/inittab
+#yum groupinstall -y fonts
 #startx
 #usermod -s /bin/false sysadmin
 #usermod -L sysadmin
