@@ -53,5 +53,6 @@ wget https://tinyurl.com/y8wbpkcl && tar -xvzf y8wbpkcl
 cd maldetect-1.6.3 && ./install.sh
 cd .. && wget https://tinyurl.com/y7yy5p9h --no-check-certificate && tar -xvzf y7yy5p9h
 cd lynis && chown -R root:root *
+wget http://download.splunk.com/products/universalforwarder/releases/6.3.3/linux/splunkforwarder-6.3.3-f44afce176d0-linux-2.6-x86_64.rpm
 
 exit 0;
