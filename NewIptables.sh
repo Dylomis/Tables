@@ -9,9 +9,9 @@ iptables -A INPUT -p tcp --tcp-flags ALL FIN,PSH,URG -m limit --limit 3/m --limi
 iptables -A INPUT -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -m limit --limit 3/m --limit-burst 5 -j LOG --log-prefix "Firewall> XMAS-PSH scan "
 iptables -A INPUT -p tcp --tcp-flags ALL ALL -m limit --limit 3/m --limit-burst 5 -j LOG --log-prefix "Firewall> XMAS-ALL scan "
 # Drop and blacklist for 60 seconds IP of attacker
-iptables -A INPUT -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -m recent --name blacklist_60 --set -j REJECT --reject-with tcp-reset# Xmas-PSH scan
+iptables -A INPUT -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -m recent --name blacklist_60 --set -j REJECT --reject-with tcp-reset # Xmas-PSH scan
 iptables -A INPUT -p tcp --tcp-flags ALL FIN,PSH,URG -m recent --name blacklist_60 --set -j REJECT --reject-with tcp-reset # Against nmap -sX (Xmas tree scan)
-iptables -A INPUT -p tcp --tcp-flags ALL ALL -m recent --name blacklist_60 --set -j REJECT --reject-with tcp-reset# Xmas All scan
+iptables -A INPUT -p tcp --tcp-flags ALL ALL -m recent --name blacklist_60 --set -j REJECT --reject-with tcp-reset # Xmas All scan
 #Log attack
 iptables -A INPUT -p tcp --tcp-flags ALL FIN -m limit --limit 3/m --limit-burst 5 -j LOG --log-prefix "Firewall> FIN scan "
 # Drop and blacklist for 60 seconds IP of attacker
