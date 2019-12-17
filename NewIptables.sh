@@ -22,7 +22,8 @@ iptables -A INPUT -p tcp  -m multiport --dports 23,79 --tcp-flags ALL SYN -m lim
 # blacklist for three minuts
 iptables -A  INPUT -p tcp  -m multiport --dports 23,79 --tcp-flags ALL SYN -m recent --name blacklist_180 --set -j REJECT --reject-with tcp-reset
 iptables -A INPUT -p udp  -m limit --limit 6/h --limit-burst 1 -m length --length 0:28 -j LOG --log-prefix "Firewall>0 length udp "
-iptables -A INPUT -p udp -m length --length 0:28 -j REJECT --reject-with tcp-reset
+iptables -A INPUT -p udp -m length --length 0:28 -j REJECT --reject-with icmp-host-unreachable
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -P INPUT REJECT
 iptables -P OUTPUT ACCEPT
 service iptables save
