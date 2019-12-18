@@ -27,10 +27,10 @@ iptables -A FORWARD -m state --state INVALID -j DROP
 iptables -A OUTPUT -m state --state INVALID -j LOG --log-prefix "OUTPUT Invalid Drop: " --log-level 4
 iptables -A OUTPUT -m state --state INVALID -j DROP
 iptables -A INPUT -p tcp -m tcp --tcp-flags RST RST -m limit --limit 2/second --limit-burst 2 -j ACCEPT
-iptables -A INPUT -p tcp -m tcp --dport 139 -m recent --name portscan --set -j LOG --log-prefix "portscan:" --log-level 4
-iptables -A INPUT -p tcp -m tcp --dport 139 -m recent --name portscan --set -j DROP
-iptables -A FORWARD -p tcp -m tcp --dport 139 -m recent --name portscan --set -j LOG --log-prefix "portscan:" --log-level 4
-iptables -A FORWARD -p tcp -m tcp --dport 139 -m recent --name portscan --set -j DROP
+iptables -A INPUT -p tcp -m tcp --dport 85 -m recent --name portscan --set -j LOG --log-prefix "portscan:" --log-level 4
+iptables -A INPUT -p tcp -m tcp --dport 85 -m recent --name portscan --set -j DROP
+iptables -A FORWARD -p tcp -m tcp --dport 85 -m recent --name portscan --set -j LOG --log-prefix "portscan:" --log-level 4
+iptables -A FORWARD -p tcp -m tcp --dport 85 -m recent --name portscan --set -j DROP
 iptables -A INPUT -m recent --name portscan --rcheck --seconds 86400 -j DROP
 iptables -A FORWARD -m recent --name portscan --rcheck --seconds 86400 -j DROP
 iptables -A INPUT -m recent --name portscan --remove
