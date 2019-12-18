@@ -1,1 +1,0 @@
-while [ 1 ] ; echo "started" ; do IP=`nc -v -1 -p 81 2>&1 1> /dev/null | grep from | cut -d[ -f 3 | cut -d] -f 1`; iptables -A INPUT -p tcp -s ${IP} -j DROP; done
