@@ -31,8 +31,6 @@ iptables -A INPUT -p tcp -m tcp --dport 139 -m recent --name portscan --set -j L
 iptables -A INPUT -p tcp -m tcp --dport 139 -m recent --name portscan --set -j DROP
 iptables -A FORWARD -p tcp -m tcp --dport 139 -m recent --name portscan --set -j LOG --log-prefix "portscan:" --log-level 4
 iptables -A FORWARD -p tcp -m tcp --dport 139 -m recent --name portscan --set -j DROP
-iptables -A INPUT -p tcp -m tcp --dport 22 -m recent --name sshattempt --set -j REJECT --reject-with tcp-reset
-iptables -A INPUT -m recent --name sshattempt --rcheck --seconds 86400 -j DROP
 iptables -A INPUT -m recent --name portscan --rcheck --seconds 86400 -j DROP
 iptables -A FORWARD -m recent --name portscan --rcheck --seconds 86400 -j DROP
 iptables -A INPUT -m recent --name portscan --remove
